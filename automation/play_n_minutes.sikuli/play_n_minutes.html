@@ -1,0 +1,152 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>play_n_minutes.sikuli</h2> <a href="play_n_minutes.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">def</span> show_desktop():
+     <span class="skw">click</span>(Pattern(<img src="1471937352697.png" />).targetOffset(<span class="dig">5</span>,<span class="dig">12</span>))
+<span class="kw">def</span> launch_rocket_bot():
+    <span class="kw">while</span> <span class="kw">not</span> exists(<img src="1472013829687.png" />):
+        <span class="skw">click</span>(Pattern(<img src="1471937352697.png" />).targetOffset(<span class="dig">5</span>,<span class="dig">12</span>))
+
+    <span class="skw">doubleClick</span>(<img src="1471937225910.png" />)
+    <span class="kw">for</span> x <span class="kw">in</span> xrange(<span class="dig">1</span>,<span class="dig">10</span>):
+        <span class="kw">try</span>:
+            <span class="skw">sleep</span>(<span class="dig">1</span>)
+            <span class="skw">wait</span>(<img src="1471937569324.png" />)
+        <span class="kw">except</span>:
+            <span class="kw">pass</span>
+
+<span class="kw">def</span> click_start():
+    <span class="skw">click</span>(<img src="1471937975654.png" />)
+
+<span class="kw">def</span> close_prog():
+    <span class="kw">if</span> exists(Pattern(<img src="1471938037425.png" />).targetOffset(<span class="dig">39</span>,-<span class="dig">21</span>)):
+        <span class="skw">click</span>(Pattern(<img src="1471938037425.png" />).targetOffset(<span class="dig">39</span>,-<span class="dig">21</span>))
+
+<span class="kw">def</span> is_bot_dead():
+    ret = False
+    <span class="kw">if</span> exists(<img src="1471938545940.png" />):
+        ret = True
+    <span class="kw">elif</span> exists(<img src="1471940335321.png" />):
+        detect_bot_dead_null_ref_repeated()
+        ret = True
+    <span class="kw">return</span> ret
+
+<span class="kw">def</span> detect_bot_dead_null_ref_repeated():
+    danger=<span class="dig">0</span>
+    <span class="kw">for</span> x <span class="kw">in</span> xrange(<span class="dig">1</span>, <span class="dig">6</span>):
+        <span class="kw">if</span> exists(<img src="1471940335321.png" />):
+            danger+=<span class="dig">1</span>
+        <span class="skw">sleep</span>(<span class="dig">1</span>)
+    <span class="kw">if</span> danger &gt;= <span class="dig">3</span>:
+       terminate_bot(danger)
+
+<span class="kw">def</span> terminate_bot(danger):
+    <span class="kw">print</span>(<span class="str">"terminate_bot ... 'see Null Reference' %s times"</span> %(danger))
+    show_desktop()
+    close_prog()
+
+<span class="kw">def</span> play_n_minute(N=<span class="dig">30</span>):
+    <span class="kw">import</span> time, datetime
+    max_retry = N*<span class="dig">6</span> <span class="cmt"># 60 minutes</span>
+    time_start = time.time()
+    time_end = time_start + <span class="dig">60</span>*<span class="dig">60</span>
+    show_desktop()
+    launch_rocket_bot()
+    click_start()
+
+    <span class="kw">for</span> x <span class="kw">in</span> xrange(<span class="dig">1</span>, max_retry):
+        <span class="kw">if</span> time.time() &gt; time_end:
+            <span class="kw">print</span>(<span class="str">"played %s minutes"</span> %(N))
+            exit(<span class="dig">0</span>)
+        st = datetime.datetime.fromtimestamp(time.time()).strftime(<span class="str">'%Y-%m-%d %H:%M:%S'</span>)
+        <span class="kw">if</span> is_bot_dead():
+            close_prog()
+            launch_rocket_bot()
+            click_start()
+        <span class="kw">else</span>:
+            <span class="kw">print</span>(<span class="str">"[%s] had checked %s out of %s"</span> %(st, x, max_retry))
+            <span class="skw">sleep</span>(<span class="dig">10</span>)
+            <span class="kw">pass</span>
+    <span class="kw">print</span>(<span class="str">"finished"</span>)
+    close_prog()
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    params = {}
+    interation = params.get(<span class="str">"iteration"</span>, <span class="dig">10</span>)
+    <span class="kw">for</span> i <span class="kw">in</span> xrange(<span class="dig">1</span>, interation):
+        <span class="kw">try</span>:
+            play_n_minutes(N=<span class="dig">60</span>)
+        <span class="kw">except</span> Exception, err:
+            <span class="kw">print</span>(<span class="str">"EXCEPTION: %s -- err: %s"</span> %(Exception, err))
+</pre>
+</body>
+</html>
