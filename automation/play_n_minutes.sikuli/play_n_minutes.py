@@ -42,7 +42,7 @@ def terminate_bot(danger):
     show_desktop()
     close_prog()
     
-def play_n_minute(N=30):
+def play_n_minutes(N=30):
     import time, datetime
     max_retry = N*6 # 60 minutes
     time_start = time.time()
