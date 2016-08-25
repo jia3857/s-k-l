@@ -6,7 +6,7 @@ def launch_rocket_bot():
 
     doubleClick("1471937225910.png")
 
-    wait("1471937569324.png") 
+    wait("1471937569324.png",10) 
 
 def click_start():
     click("1471937975654.png")
@@ -43,16 +43,20 @@ def play_n_minutes(N=30):
     max_retry = N*6 # 60 minutes
     time_start = time.time()
     time_end = time_start + 60*60
+    
     show_desktop()
     launch_rocket_bot()
     click_start()
-  
+      
+    print("will play %s minute(s) since %s" %(N, time_start))
+    
     for x in xrange(1, max_retry):
         if time.time() > time_end:
             print("played %s minutes" %(N))
             exit(0)
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
         if is_bot_dead():
+            print("[%s] BOT IS DEAD" %(st))
             raise Exception("bot is dead... restart")
             close_prog()
             launch_rocket_bot()
@@ -61,14 +65,14 @@ def play_n_minutes(N=30):
             print("[%s] had checked %s out of %s" %(st, x, max_retry))
             sleep(10)
             pass
-    print("finished")
+    print("finished...")
     close_prog()
 
 if __name__ == "__main__":
     params = {}
-    interation = params.get("iteration", 10)
-    for i in xrange(1, interation):
+    iteration = params.get("iteration", 10)
+    for i in xrange(1, iteration):
         try:
-            play_n_minutes(N=60)
+            play_n_minutes(N=30)
         except Exception, err:
             print("EXCEPTION: %s -- err: %s" %(Exception, err))

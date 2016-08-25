@@ -78,7 +78,7 @@
 
     <span class="skw">doubleClick</span>(<img src="1471937225910.png" />)
 
-    <span class="skw">wait</span>(<img src="1471937569324.png" />)
+    <span class="skw">wait</span>(<img src="1471937569324.png" />,<span class="dig">10</span>)
 
 <span class="kw">def</span> click_start():
     <span class="skw">click</span>(<img src="1471937975654.png" />)
@@ -115,9 +115,12 @@
     max_retry = N*<span class="dig">6</span> <span class="cmt"># 60 minutes</span>
     time_start = time.time()
     time_end = time_start + <span class="dig">60</span>*<span class="dig">60</span>
+
     show_desktop()
     launch_rocket_bot()
     click_start()
+
+    <span class="kw">print</span>(<span class="str">"will play %s minute(s) since %s"</span> %(N, time_start))
 
     <span class="kw">for</span> x <span class="kw">in</span> xrange(<span class="dig">1</span>, max_retry):
         <span class="kw">if</span> time.time() &gt; time_end:
@@ -125,6 +128,7 @@
             exit(<span class="dig">0</span>)
         st = datetime.datetime.fromtimestamp(time.time()).strftime(<span class="str">'%Y-%m-%d %H:%M:%S'</span>)
         <span class="kw">if</span> is_bot_dead():
+            <span class="kw">print</span>(<span class="str">"[%s] BOT IS DEAD"</span> %(st))
             <span class="kw">raise</span> Exception(<span class="str">"bot is dead... restart"</span>)
             close_prog()
             launch_rocket_bot()
@@ -133,15 +137,15 @@
             <span class="kw">print</span>(<span class="str">"[%s] had checked %s out of %s"</span> %(st, x, max_retry))
             <span class="skw">sleep</span>(<span class="dig">10</span>)
             <span class="kw">pass</span>
-    <span class="kw">print</span>(<span class="str">"finished"</span>)
+    <span class="kw">print</span>(<span class="str">"finished..."</span>)
     close_prog()
 
 <span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
     params = {}
-    interation = params.get(<span class="str">"iteration"</span>, <span class="dig">10</span>)
-    <span class="kw">for</span> i <span class="kw">in</span> xrange(<span class="dig">1</span>, interation):
+    iteration = params.get(<span class="str">"iteration"</span>, <span class="dig">10</span>)
+    <span class="kw">for</span> i <span class="kw">in</span> xrange(<span class="dig">1</span>, iteration):
         <span class="kw">try</span>:
-            play_n_minutes(N=<span class="dig">60</span>)
+            play_n_minutes(N=<span class="dig">30</span>)
         <span class="kw">except</span> Exception, err:
             <span class="kw">print</span>(<span class="str">"EXCEPTION: %s -- err: %s"</span> %(Exception, err))
 </pre>
