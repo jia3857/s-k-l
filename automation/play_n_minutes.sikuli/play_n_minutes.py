@@ -5,12 +5,8 @@ def launch_rocket_bot():
         click(Pattern("1471937352697.png").targetOffset(5,12))
 
     doubleClick("1471937225910.png")
-    for x in xrange(1,10):
-        try:
-            sleep(1)
-            wait("1471937569324.png") 
-        except:
-            pass
+
+    wait("1471937569324.png") 
 
 def click_start():
     click("1471937975654.png")
@@ -57,6 +53,7 @@ def play_n_minutes(N=30):
             exit(0)
         st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
         if is_bot_dead():
+            raise Exception("bot is dead... restart")
             close_prog()
             launch_rocket_bot()
             click_start()

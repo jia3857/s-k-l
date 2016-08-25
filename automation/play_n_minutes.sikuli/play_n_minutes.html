@@ -77,12 +77,8 @@
         <span class="skw">click</span>(Pattern(<img src="1471937352697.png" />).targetOffset(<span class="dig">5</span>,<span class="dig">12</span>))
 
     <span class="skw">doubleClick</span>(<img src="1471937225910.png" />)
-    <span class="kw">for</span> x <span class="kw">in</span> xrange(<span class="dig">1</span>,<span class="dig">10</span>):
-        <span class="kw">try</span>:
-            <span class="skw">sleep</span>(<span class="dig">1</span>)
-            <span class="skw">wait</span>(<img src="1471937569324.png" />)
-        <span class="kw">except</span>:
-            <span class="kw">pass</span>
+
+    <span class="skw">wait</span>(<img src="1471937569324.png" />)
 
 <span class="kw">def</span> click_start():
     <span class="skw">click</span>(<img src="1471937975654.png" />)
@@ -129,6 +125,7 @@
             exit(<span class="dig">0</span>)
         st = datetime.datetime.fromtimestamp(time.time()).strftime(<span class="str">'%Y-%m-%d %H:%M:%S'</span>)
         <span class="kw">if</span> is_bot_dead():
+            <span class="kw">raise</span> Exception(<span class="str">"bot is dead... restart"</span>)
             close_prog()
             launch_rocket_bot()
             click_start()
